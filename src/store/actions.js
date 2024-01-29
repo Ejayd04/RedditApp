@@ -8,6 +8,12 @@ export const FETCH_POST_DETAILS_REQUEST = 'FETCH_POST_DETAILS_REQUEST';
 export const FETCH_POST_DETAILS_SUCCESS = 'FETCH_POST_DETAILS_SUCCESS';
 export const FETCH_POST_DETAILS_FAILURE = 'FETCH_POST_DETAILS_FAILURE';
 
+export const SEARCH_POSTS_REQUEST = 'SEARCH_POSTS_REQUEST';
+export const SEARCH_POSTS_SUCCESS = 'SEARCH_POSTS_SUCCESS';
+export const SEARCH_POSTS_FAILURE = 'SEARCH_POSTS_FAILURE';
+
+
+
 export const SET_REDDIT_POSTS = 'SET_REDDIT_POSTS';
 
 export const fetchPostsRequest = () => ({
@@ -37,6 +43,21 @@ export const fetchPostDetailsSuccess = (post) => ({
 
 export const fetchPostDetailsFailure = (error) => ({
     type: FETCH_POST_DETAILS_FAILURE,
+    payload: error,
+});
+
+
+export const searchPostsRequest = () => ({
+    type: SEARCH_POSTS_REQUEST,
+});
+
+export const searchPostsSuccess = (results) => ({
+    type: SEARCH_POSTS_SUCCESS,
+    payload: results,
+});
+
+export const searchPostsFailure = (error) => ({
+    type: SEARCH_POSTS_FAILURE,
     payload: error,
 });
 
@@ -76,6 +97,22 @@ export const fetchPostDetails = (postId) => {
                 dispatch(fetchPostDetailsFailure(error.message));
             });
     };
+}
+
+export const searchPosts = (query) => {
+    return (dispatch) => {
+        dispatch(searchPostsRequest());
+        const apiUrl = `https://www.reddit.com/r/korea/search.json?q=${query}`;
+
+        axios.get(apiUrl)
+            .then((response) => {
+                const results = response.data.data.children.map(child => child.data);
+                dispatch(searchPostsSuccess(results));
+            })
+            .catch((error) => {
+                dispatch(searchPostsFailure(error.message));
+            });
+    }
 }
 
 export const setRedditPosts = (posts) => ({

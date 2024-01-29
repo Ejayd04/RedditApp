@@ -6,6 +6,9 @@ import {
     FETCH_POST_DETAILS_SUCCESS,
     FETCH_POST_DETAILS_FAILURE,
     SET_REDDIT_POSTS,
+    SEARCH_POSTS_REQUEST,
+    SEARCH_POSTS_SUCCESS,
+    SEARCH_POSTS_FAILURE,
 } from './actions';
 
 const initialState = {
@@ -13,6 +16,7 @@ const initialState = {
     loading: false,
     error: null,
     selectedPost: {},
+    searchResults: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -51,6 +55,23 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 selectedPost: {},
+                error: action.payload,
+            };
+        case SEARCH_POSTS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case SEARCH_POSTS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                searchResults: action.payload,
+            };
+        case SEARCH_POSTS_FAILURE:
+            return {
+                ...state,
+                loading: false,
                 error: action.payload,
             };
         default:
