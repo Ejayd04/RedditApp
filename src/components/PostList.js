@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPosts } from "../store/actions";
+import { Link } from "react-router-dom";
 
 
 function PostList() {
@@ -27,9 +28,7 @@ function PostList() {
             <ul>
                 {posts.map((post) => (
                     <li key={post.id}>
-                        <a href={post.data.url} targer="_blank" rel="noopener noreferrer">
-                            {post.data.title}
-                        </a>
+                        <Link  to={`/post/${post.data.id}`}>{post.data.title}</Link>
                     </li>
                 ))}
             </ul>
