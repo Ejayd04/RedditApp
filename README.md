@@ -1,8 +1,5 @@
 # Reddit App
 
-## Wireframes
-
-https://www.behance.net/gallery/108476979/Reddit-UIUX-redesign-unofficial/modules/621597853
 
 ## Technologies Used
 
